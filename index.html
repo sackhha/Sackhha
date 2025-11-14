@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sackhaa - सखा</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(to bottom, #f5e6d3 0%, #e8d4bb 100%);
+            color: #3a2f26;
+            overflow-x: hidden;
+        }
+
+        /* Handwritten font styling */
+        .handwritten {
+            font-family: 'Courier New', cursive;
+            font-weight: normal;
+            line-height: 1.6;
+        }
+
+        /* Entrance Section */
+        .entrance {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .entrance::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" stitchTiles="stitch"/></filter><rect width="100" height="100" filter="url(%23noise)" opacity="0.05"/></svg>');
+            opacity: 0.3;
+        }
+
+        .entrance-text {
+            text-align: center;
+            color: #fff;
+            z-index: 1;
+            padding: 2rem;
+        }
+
+        .entrance h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            transform: rotate(-1deg);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .entrance p {
+            font-size: 1.2rem;
+            margin: 1rem 0;
+            opacity: 0.9;
+        }
+
+        .arrow-down {
+            font-size: 2rem;
+            animation: bounce 2s infinite;
+            cursor: pointer;
+            margin-top: 2rem;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Section Container */
+        section {
+            min-height: 100vh;
+            padding: 4rem 2rem;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .section-content {
+            max-width: 800px;
+            width: 100%;
+            position: relative;
+        }
+
+        /* Paper texture overlay */
+        section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" stitchTiles="stitch"/></filter><rect width="100" height="100" filter="url(%23noise)" opacity="0.03"/></svg>');
+            pointer-events: none;
+        }
+
+        /* Listening Room */
+        .listening-room {
+            background: linear-gradient(to bottom, #fef5e7 0%, #f9e6cf 100%);
+        }
+
+        .polaroid {
+            background: #fff;
+            padding: 1rem;
+            box-shadow: 3px 5px 15px rgba(0,0,0,0.2);
+            transform: rotate(-2deg);
+            margin: 2rem auto;
+            max-width: 90%;
+        }
+
+        .polaroid iframe {
+            width: 100%;
+            height: 315px;
+            border: none;
+        }
+
+        .note {
+            background: #fffacd;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            box-shadow: 2px 3px 8px rgba(0,0,0,0.15);
+            transform: rotate(1deg);
+            border-left: 3px solid #f0e68c;
+            position: relative;
+        }
+
+        .note::before {
+            content: '📌';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            font-size: 1.5rem;
+        }
+
+        .note p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin: 0.5rem 0;
+        }
+
+        .fade-in {
+            opacity: 0;
+            transition: opacity 1s ease-in;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+        }
+
+        /* Work Desk Section */
+        .work-desk {
+            background: linear-gradient(to bottom, #e8d4bb 0%, #d9c4a8 100%);
+        }
+
+        .link-box {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+            box-shadow: 2px 4px 12px rgba(0,0,0,0.1);
+            transform: rotate(-0.5deg);
+            transition: transform 0.3s ease;
+        }
+
+        .link-box:hover {
+            transform: rotate(0deg) translateY(-3px);
+        }
+
+        .link-box a {
+            color: #667eea;
+            text-decoration: none;
+            font-size: 1.3rem;
+            font-weight: bold;
+            display: inline-block;
+            position: relative;
+        }
+
+        .link-box a::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #667eea;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .link-box a:hover::after {
+            transform: scaleX(1);
+        }
+
+        .link-box p {
+            margin-top: 0.5rem;
+            font-size: 1rem;
+            color: #5a5a5a;
+        }
+
+        /* Conversation Corner */
+        .conversation-corner {
+            background: linear-gradient(to bottom, #d9c4a8 0%, #c9b199 100%);
+        }
+
+        .journal-form {
+            background: #fff;
+            padding: 2rem;
+            box-shadow: 3px 5px 15px rgba(0,0,0,0.2);
+            transform: rotate(0.5deg);
+            max-width: 600px;
+            margin: 2rem auto;
+        }
+
+        .journal-form input,
+        .journal-form textarea {
+            width: 100%;
+            padding: 1rem;
+            margin: 1rem 0;
+            border: none;
+            border-bottom: 2px solid #d9d9d9;
+            background: repeating-linear-gradient(
+                transparent,
+                transparent 31px,
+                #d9d9d9 31px,
+                #d9d9d9 32px
+            );
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            line-height: 2;
+            resize: none;
+        }
+
+        .journal-form input {
+            background: none;
+        }
+
+        .journal-form textarea {
+            min-height: 200px;
+        }
+
+        .journal-form input:focus,
+        .journal-form textarea:focus {
+            outline: none;
+            border-bottom-color: #667eea;
+        }
+
+        .submit-btn {
+            background: none;
+            border: 2px solid #3a2f26;
+            padding: 0.8rem 2rem;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transform: rotate(-1deg);
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .submit-btn:hover {
+            background: #3a2f26;
+            color: #fff;
+            transform: rotate(0deg);
+        }
+
+        /* Inner Room */
+        .inner-room {
+            background: linear-gradient(to bottom, #c9b199 0%, #b8a088 100%);
+        }
+
+        .email-box {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 2rem;
+            box-shadow: 3px 5px 15px rgba(0,0,0,0.2);
+            max-width: 500px;
+            margin: 2rem auto;
+            transform: rotate(-1deg);
+        }
+
+        .email-box input[type="email"] {
+            width: 100%;
+            padding: 1rem;
+            margin: 1rem 0;
+            border: 2px solid #d9d9d9;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+        }
+
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            margin: 1rem 0;
+            cursor: pointer;
+        }
+
+        .checkbox-container input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin-right: 0.5rem;
+            cursor: pointer;
+        }
+
+        /* Exit Section */
+        .exit {
+            background: linear-gradient(to bottom, #b8a088 0%, #9a8776 100%);
+            min-height: 50vh;
+        }
+
+        .exit-text {
+            text-align: center;
+            opacity: 0.8;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .entrance h1 {
+                font-size: 2rem;
+            }
+
+            .polaroid iframe {
+                height: 200px;
+            }
+
+            section {
+                padding: 3rem 1rem;
+            }
+
+            .note p,
+            .link-box a {
+                font-size: 1rem;
+            }
+        }
+
+        /* Scroll hint */
+        .scroll-hint {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            opacity: 0.3;
+            font-size: 0.9rem;
+            pointer-events: none;
+            z-index: 100;
+        }
+    </style>
+</head>
+<body>
+    <!-- Entrance -->
+    <div class="entrance">
+        <div class="entrance-text">
+            <h1 class="handwritten">You found your way here.</h1>
+            <p>सखा - friend, companion</p>
+            <div class="arrow-down" onclick="document.querySelector('.listening-room').scrollIntoView({behavior: 'smooth'})">
+                ↓<br>Come in
+            </div>
+        </div>
+    </div>
+
+    <!-- Listening Room -->
+    <section class="listening-room">
+        <div class="section-content">
+            <div class="note">
+                <p class="handwritten">This is what 2am sounded like to me last week.</p>
+                <p class="handwritten">Give it 90 seconds?</p>
+            </div>
+
+            <div class="polaroid">
+                <!-- Replace YOUR_VIDEO_ID with your actual YouTube video ID -->
+                <iframe 
+                    src="https://www.youtube.com/embed/xUkG1nxkoQo?enablejsapi=1" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen
+                    id="youtube-player">
+                </iframe>
+            </div>
+
+            <div class="note fade-in" id="still-here">
+                <p class="handwritten">Still here?</p>
+                <p class="handwritten">I'm glad.</p>
+                <p style="margin-top: 1rem;">↓ Let me show you around</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Work Desk -->
+    <section class="work-desk">
+        <div class="section-content">
+            <div class="note">
+                <p class="handwritten">Most of this happens between 11pm-3am</p>
+                <p class="handwritten">when the world finally shuts up enough</p>
+                <p class="handwritten">to hear what I'm trying to say</p>
+            </div>
+
+            <div class="link-box">
+                <a href="https://youtube.com/@sackhha" target="_blank">📼 More sounds here →</a>
+                <p>Everything I've made so far. Stay as long as you want.</p>
+            </div>
+
+            <div class="link-box">
+                <a href="https://instagram.com/sackhha" target="_blank">🪟 The messy process →</a>
+                <p>Rough cuts, voice memos, 3am thoughts, things that never become songs</p>
+            </div>
+
+            <div class="note" style="opacity: 0.6;">
+                <p class="handwritten" style="font-size: 0.9rem;">(Spotify/Bandcamp coming when it feels right)</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Conversation Corner -->
+    <section class="conversation-corner">
+        <div class="section-content">
+            <div class="note">
+                <p class="handwritten">Friends tell each other things, you know?</p>
+                <p class="handwritten" style="margin-top: 1rem;">What's sitting heavy on you today?</p>
+                <p class="handwritten">What are you carrying that you need to set down for a minute?</p>
+                <p class="handwritten">Or maybe something good happened—tell me that too.</p>
+            </div>
+
+            <form class="journal-form" action="https://formspree.io/f/xnnlparj" method="POST">
+                <input 
+                    type="text" 
+                    name="name" 
+                    placeholder="Your name (or just 'friend' works)"
+                    required
+                >
+                <textarea 
+                    name="message" 
+                    placeholder="What's on your mind..."
+                    required
+                ></textarea>
+                <button type="submit" class="submit-btn">→ Leave it here</button>
+                <p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.7;">
+                    I read everything. Sometimes I respond.<br>
+                    Sometimes I just sit with it.<br>
+                    Sometimes I make something.
+                </p>
+            </form>
+        </div>
+    </section>
+
+    <!-- Inner Room -->
+    <section class="inner-room">
+        <div class="section-content">
+            <div class="note">
+                <p class="handwritten">Some things I only share with people who come back.</p>
+                <p class="handwritten" style="margin-top: 1rem;">Unfinished pieces.</p>
+                <p class="handwritten">Voice memos where I'm talking through an idea.</p>
+                <p class="handwritten">The thing I made at 4am that might never be 'done.'</p>
+                <p class="handwritten">Thoughts that don't fit anywhere else.</p>
+                <p class="handwritten" style="margin-top: 1rem;">Just between us.</p>
+            </div>
+
+            <div class="email-box">
+                <form action="https://formspree.io/f/xnnlparj" method="POST">
+                    <p class="handwritten">If you want in—</p>
+                    <input 
+                        type="email" 
+                        name="email" 
+                        placeholder="sackhha@gmail.com"
+                        required
+                    >
+                    <label class="checkbox-container">
+                        <input type="checkbox" name="consent" required>
+                        <span class="handwritten">Yeah, I want to stay</span>
+                    </label>
+                    <button type="submit" class="submit-btn">→ Count me in</button>
+                    <p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.7;">
+                        No schedule. No spam.<br>
+                        Just me, sharing things when they feel ready.<br>
+                        You can leave anytime.
+                    </p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Exit -->
+    <section class="exit">
+        <div class="section-content">
+            <div class="exit-text">
+                <p class="handwritten" style="font-size: 1.2rem;">That's everything.</p>
+                <p class="handwritten" style="margin-top: 1rem;">You can leave anytime,</p>
+                <p class="handwritten">or scroll back up and stay a while.</p>
+                <p class="handwritten" style="margin-top: 2rem;">Thanks for being here.</p>
+                <p style="margin-top: 3rem; font-size: 0.8rem; opacity: 0.5;">
+                    Made by hand<br>
+                    Updated whenever it feels right<br>
+                    सखा
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Fade in "Still here?" after video plays for 30 seconds
+        let videoPlayed = false;
+        const stillHereElement = document.getElementById('still-here');
+
+        // Simple timeout version (YouTube API would be more accurate but requires API key)
+        setTimeout(() => {
+            stillHereElement.classList.add('visible');
+        }, 30000);
+
+        // Smooth scroll for entrance arrow
+        document.querySelector('.arrow-down').addEventListener('click', function() {
+            document.querySelector('.listening-room').scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+
+        // Add subtle parallax effect
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallaxElements = document.querySelectorAll('.note, .polaroid, .link-box');
+            
+            parallaxElements.forEach((el, index) => {
+                const speed = 0.5 + (index * 0.1);
+                const yPos = -(scrolled * speed / 100);
+                el.style.transform = `translateY(${yPos}px) rotate(${index % 2 ? 1 : -1}deg)`;
+            });
+        });
+    </script>
+</body>
+</html>
