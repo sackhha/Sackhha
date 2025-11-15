@@ -7,6 +7,7 @@
     <style>
         /* ============================================
            GLOBAL STYLES
+           These styles apply to the entire page
            ============================================ */
         * {
             margin: 0;
@@ -15,17 +16,22 @@
         }
 
         body {
-            font-family: 'Courier New', monospace;
-            color: #3a2f26;
+            /* FONT: Simple, readable font that feels handwritten but clear */
+            font-family: 'Georgia', 'Times New Roman', serif;
+            
+            /* COLOR: Warm brown text, not harsh black */
+            color: #4a3f35;
+            
             overflow-x: hidden;
             position: relative;
+            
+            /* Slightly off-white background if no image loads */
+            background: #f5f1e8;
         }
 
         /* ============================================
            BACKGROUND IMAGE SYSTEM
-           - Uses one long vertical image
-           - Scrolls with the page
-           - Separate images for desktop/mobile
+           One long vertical image that scrolls with you
            ============================================ */
         .background-wrapper {
             position: absolute;
@@ -43,12 +49,12 @@
             object-fit: cover;
         }
 
-        /* Show desktop image by default, hide mobile */
+        /* Desktop image shows by default */
         .background-image.mobile {
             display: none;
         }
 
-        /* On mobile: show mobile image, hide desktop */
+        /* On mobile screens: hide desktop, show mobile */
         @media (max-width: 768px) {
             .background-image.desktop {
                 display: none;
@@ -58,7 +64,6 @@
             }
         }
 
-        /* Content wrapper - ensures all content appears above background */
         .content-wrapper {
             position: relative;
             z-index: 1;
@@ -66,8 +71,7 @@
 
         /* ============================================
            ENTRANCE SECTION
-           - First thing visitors see
-           - Artist name + greeting
+           First thing visitors see
            ============================================ */
         .entrance {
             height: 100vh;
@@ -76,91 +80,50 @@
             justify-content: center;
             align-items: center;
             position: relative;
-            overflow: hidden;
-            background: transparent;
-        }
-
-        /* Subtle noise texture overlay for depth */
-        .entrance::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" stitchTiles="stitch"/></filter><rect width="100" height="100" filter="url(%23noise)" opacity="0.05"/></svg>');
-            opacity: 0.3;
-            animation: subtleMove 20s ease-in-out infinite;
-        }
-
-        @keyframes subtleMove {
-            0%, 100% { transform: translate(0, 0); }
-            50% { transform: translate(-2px, -2px); }
         }
 
         .entrance-text {
             text-align: center;
-            z-index: 1;
             padding: 2rem;
-            animation: fadeIn 1.5s ease-in;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* CUSTOMIZATION: Main greeting text */
+        /* GREETING TEXT: "You found your way here" */
         .entrance h2 {
-            font-size: 1.8rem; /* EDIT: Change size here */
+            font-size: 1.5rem;
             margin-bottom: 2rem;
-            transform: rotate(-1deg);
-            color: #3a2f26; /* EDIT: Change color here */
             font-weight: normal;
-            text-shadow: 2px 2px 4px rgba(255,255,255,0.3);
-        }
-
-        /* CUSTOMIZATION: Artist name - "Sackhaa" */
-        .entrance h1 {
-            font-size: 4rem; /* EDIT: Change size here */
-            margin-bottom: 0.5rem;
-            transform: rotate(-2deg);
-            color: #667eea; /* EDIT: Change color here */
-            text-shadow: 3px 3px 6px rgba(0,0,0,0.2);
-            font-weight: bold;
-            letter-spacing: 2px;
-        }
-
-        /* CUSTOMIZATION: Hindi name below */
-        .entrance .hindi-name {
-            font-size: 2.5rem; /* EDIT: Change size here */
-            color: #764ba2; /* EDIT: Change color here */
-            margin-top: 0.5rem;
+            color: #5a4a3a;
             font-style: italic;
         }
 
-        /* Animated arrow pointing down */
-        .arrow-down {
+        /* ARTIST NAME: "Sackhaa" */
+        .entrance h1 {
+            font-size: 3.5rem;
+            margin-bottom: 0.5rem;
+            color: #3a2f26;
+            font-weight: normal;
+            letter-spacing: 3px;
+        }
+
+        /* HINDI NAME: "सखा" */
+        .entrance .hindi-name {
             font-size: 2rem;
-            animation: bounce 2s infinite;
+            color: #6a5a4a;
+            margin-top: 0.5rem;
+            font-style: normal;
+        }
+
+        /* Down arrow */
+        .arrow-down {
+            font-size: 1.8rem;
             cursor: pointer;
             margin-top: 2rem;
-            color: #667eea;
-            transition: transform 0.3s ease;
-        }
-
-        .arrow-down:hover {
-            transform: scale(1.2);
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+            color: #5a4a3a;
         }
 
         /* ============================================
-           SECTION CONTAINER - SHARED STYLES
-           - All sections use these base styles
+           SECTION CONTAINER
+           All main sections use these base styles
            ============================================ */
         section {
             min-height: 100vh;
@@ -170,316 +133,331 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            background: transparent;
         }
 
         .section-content {
             max-width: 800px;
             width: 100%;
             position: relative;
-            animation: fadeInUp 0.8s ease-out;
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
         }
 
         /* ============================================
-           STICKY NOTE STYLE
-           - Yellow notes with pushpins
-           - Used throughout for text content
+           PAPER NOTE STYLE
+           Yellow sticky notes with pushpins
+           
+           TO ADD YOUR OWN PAPER IMAGE:
+           1. Save your paper cut image as 'note-paper.png'
+           2. Upload it to your GitHub repository
+           3. Uncomment the background-image line below
+           4. The image will replace the yellow color
            ============================================ */
         .note {
-            background: linear-gradient(135deg, #fffacd 0%, #fff9b8 100%); /* EDIT: Change colors here */
-            padding: 1.5rem;
+            /* BACKGROUND: Yellow note color (will be replaced by your image) */
+            background: #fef9e7;
+            
+            /* TO USE YOUR IMAGE: Uncomment this line and upload 'note-paper.png' */
+            /* background-image: url('note-paper.png'); */
+            background-size: cover;
+            background-position: center;
+            
+            /* SPACING: Extra padding so your image edges show */
+            padding: 2rem 2.5rem;
             margin: 2rem 0;
-            box-shadow: 3px 5px 15px rgba(0,0,0,0.2);
-            transform: rotate(1deg); /* EDIT: Change rotation angle */
-            border-left: 3px solid #f0e68c;
+            
+            /* SHADOW: Subtle depth */
+            box-shadow: 2px 4px 8px rgba(0,0,0,0.15);
+            
+            /* ROTATION: Makes it look placed by hand */
+            transform: rotate(0.5deg);
+            
             position: relative;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .note:hover {
-            transform: rotate(0deg) translateY(-3px);
-            box-shadow: 5px 8px 20px rgba(0,0,0,0.25);
-        }
+        /* Pushpin decoration removed */
 
-        /* Pushpin decoration */
-        .note::before {
-            content: '📌';
-            position: absolute;
-            top: -10px;
-            left: 20px;
-            font-size: 1.5rem;
-            animation: pinWiggle 3s ease-in-out infinite;
-        }
-
-        @keyframes pinWiggle {
-            0%, 100% { transform: rotate(0deg); }
-            25% { transform: rotate(-5deg); }
-            75% { transform: rotate(5deg); }
-        }
-
-        /* CUSTOMIZATION: Note text */
+        /* TEXT INSIDE NOTES */
         .note p {
-            font-size: 1.2rem; /* EDIT: Change text size */
-            line-height: 1.8;
+            /* FONT SIZE: Easy to read */
+            font-size: 1.1rem;
+            
+            /* LINE HEIGHT: Breathing room between lines */
+            line-height: 1.7;
+            
+            /* SPACING: Space between paragraphs */
             margin: 0.5rem 0;
-            color: #3a2f26; /* EDIT: Change text color */
+            
+            /* COLOR: Warm brown, not black */
+            color: #4a3f35;
         }
 
         /* ============================================
            POLAROID FRAME STYLE
-           - For video embeds
+           For video embeds - looks like old photo
+           
+           TO ADD YOUR OWN FRAME IMAGE:
+           1. Save frame image as 'polaroid-frame.png'
+           2. Upload to GitHub
+           3. Uncomment background-image line below
            ============================================ */
         .polaroid {
+            /* BACKGROUND: White frame */
             background: #fff;
-            padding: 1rem;
-            padding-bottom: 3rem;
-            box-shadow: 5px 8px 20px rgba(0,0,0,0.25);
-            transform: rotate(-2deg);
+            
+            /* TO USE YOUR IMAGE: Uncomment and upload 'polaroid-frame.png' */
+            /* background-image: url('polaroid-frame.png'); */
+            background-size: cover;
+            
+            /* PADDING: Space around video (extra for your image) */
+            padding: 1.5rem;
+            padding-bottom: 4rem;
+            
+            /* SHADOW: Depth */
+            box-shadow: 3px 6px 12px rgba(0,0,0,0.2);
+            
+            /* ROTATION: Slight tilt */
+            transform: rotate(-1deg);
+            
             margin: 2rem auto;
-            max-width: 90%;
-            transition: transform 0.3s ease;
+            max-width: 70%; /* REDUCED BY 20% from 90% */
         }
 
-        .polaroid:hover {
-            transform: rotate(0deg) scale(1.02);
-        }
-
+        /* VIDEO PLAYER INSIDE POLAROID */
         .polaroid iframe {
             width: 100%;
-            height: 315px;
+            height: 280px; /* REDUCED BY 20% from 350px */
             border: none;
         }
 
-        /* Caption below video (like Polaroid writing) */
+        /* Caption below video (like writing on Polaroid) */
         .polaroid-caption {
             text-align: center;
             margin-top: 1rem;
-            font-family: 'Courier New', cursive;
             font-size: 0.9rem;
-            color: #666;
+            color: #7a6a5a;
+            font-style: italic;
         }
 
         /* ============================================
-           PERSONAL TOUCH SECTIONS
-           - Status update (you edit manually)
-           - Rotating lyrics display
+           STATUS UPDATE BOX
+           Where you update your current feeling/status
+           
+           TO ADD YOUR OWN BACKGROUND:
+           Upload 'status-bg.png' and uncomment below
            ============================================ */
-
-        /* STATUS UPDATE BOX */
         .status-box {
-            background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%);
-            padding: 2rem;
-            margin: 3rem 0;
-            border-radius: 15px;
-            box-shadow: 5px 8px 25px rgba(0,0,0,0.3);
-            transform: rotate(-1deg);
-            animation: gentlePulse 4s ease-in-out infinite;
-        }
-
-        @keyframes gentlePulse {
-            0%, 100% { transform: rotate(-1deg) scale(1); }
-            50% { transform: rotate(1deg) scale(1.02); }
+            /* BACKGROUND: Warm tan color */
+            background: #f4e8d8;
+            
+            /* TO USE YOUR IMAGE: Uncomment and upload 'status-bg.png' */
+            /* background-image: url('status-bg.png'); */
+            background-size: cover;
+            
+            /* SIZE: Made smaller as requested */
+            padding: 1.5rem 2rem;
+            margin: 2rem 0;
+            
+            /* BORDER: Subtle frame effect */
+            border: 2px solid #d4c4b4;
+            border-radius: 8px;
+            
+            box-shadow: 2px 4px 8px rgba(0,0,0,0.15);
+            transform: rotate(-0.5deg);
         }
 
         .status-box h3 {
-            color: #fff;
-            font-size: 1.5rem;
+            /* TITLE: "Right now, I'm..." */
+            color: #4a3f35;
+            font-size: 1.2rem;
             margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-
-        /* CUSTOMIZATION: Your current status/feeling */
-        .status-box .status-text {
-            color: #fff;
-            font-size: 1.3rem; /* EDIT: Change size */
+            font-weight: normal;
             font-style: italic;
-            line-height: 1.6;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
         }
 
+        /* YOUR STATUS TEXT - Edit this in HTML */
+        .status-box .status-text {
+            color: #5a4a3a;
+            font-size: 1.05rem;
+            line-height: 1.6;
+            font-style: italic;
+        }
+
+        /* Date stamp */
         .status-box .status-date {
-            color: rgba(255,255,255,0.8);
-            font-size: 0.9rem;
+            color: #7a6a5a;
+            font-size: 0.85rem;
             margin-top: 1rem;
             text-align: right;
         }
 
-        /* LYRICS DISPLAY BOX */
+        /* ============================================
+           LYRICS DISPLAY BOX
+           Shows rotating lyrics from your songs
+           
+           TO ADD YOUR OWN BACKGROUND:
+           Upload 'lyrics-bg.png' and uncomment below
+           ============================================ */
         .lyrics-box {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 2.5rem;
-            margin: 3rem 0;
-            border-radius: 15px;
-            box-shadow: 5px 8px 25px rgba(0,0,0,0.3);
-            transform: rotate(1deg);
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* Animated background shimmer */
-        .lyrics-box::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(
-                45deg,
-                transparent 30%,
-                rgba(255,255,255,0.1) 50%,
-                transparent 70%
-            );
-            animation: shimmer 6s infinite;
-        }
-
-        @keyframes shimmer {
-            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+            /* BACKGROUND: Soft peach/cream */
+            background: #f9f0e8;
+            
+            /* TO USE YOUR IMAGE: Uncomment and upload 'lyrics-bg.png' */
+            /* background-image: url('lyrics-bg.png'); */
+            background-size: cover;
+            
+            /* SIZE: Made smaller */
+            padding: 1.5rem 2rem;
+            margin: 2rem 0;
+            
+            border: 2px solid #e4d4c4;
+            border-radius: 8px;
+            box-shadow: 2px 4px 8px rgba(0,0,0,0.15);
+            transform: rotate(0.5deg);
         }
 
         .lyrics-box h3 {
-            color: #fff;
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-            position: relative;
-            z-index: 1;
-        }
-
-        /* CUSTOMIZATION: The actual lyrics text */
-        .lyrics-text {
-            color: #fff;
-            font-size: 1.4rem; /* EDIT: Change size */
+            color: #4a3f35;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            font-weight: normal;
             font-style: italic;
-            line-height: 2;
-            text-align: center;
-            position: relative;
-            z-index: 1;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-            margin: 1.5rem 0;
         }
 
-        /* Song attribution */
+        /* THE LYRICS TEXT - Edit in HTML */
+        .lyrics-text {
+            color: #5a4a3a;
+            font-size: 1.15rem;
+            font-style: italic;
+            line-height: 1.8;
+            text-align: center;
+            margin: 1rem 0;
+        }
+
+        /* Song name attribution */
         .lyrics-source {
-            color: rgba(255,255,255,0.9);
-            font-size: 1rem;
+            color: #7a6a5a;
+            font-size: 0.95rem;
             text-align: right;
-            margin-top: 1.5rem;
-            position: relative;
-            z-index: 1;
+            margin-top: 1rem;
         }
 
         /* ============================================
-           LINK BOXES
-           - For YouTube, Instagram, etc.
+           PROFILE CARDS
+           Compact YouTube and Instagram embeds
            ============================================ */
-        .link-box {
-            background: rgba(255, 255, 255, 0.85);
+        .profile-card {
+            /* BACKGROUND: Clean white card */
+            background: #fff;
+            
+            /* TO USE YOUR IMAGE: Upload 'card-bg.png' and uncomment */
+            /* background-image: url('card-bg.png'); */
+            background-size: cover;
+            
+            /* SIZE: Compact, minimal space */
             padding: 1.5rem;
             margin: 1.5rem 0;
-            border-radius: 12px;
-            box-shadow: 3px 6px 15px rgba(0,0,0,0.15);
-            transform: rotate(-0.5deg);
-            transition: all 0.3s ease;
-            border-left: 4px solid #667eea;
+            
+            border: 2px solid #e4d4c4;
+            border-radius: 8px;
+            box-shadow: 2px 4px 8px rgba(0,0,0,0.12);
+            
+            /* LAYOUT: Horizontal arrangement */
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
         }
 
-        .link-box:hover {
-            transform: rotate(0deg) translateY(-5px);
-            box-shadow: 5px 10px 25px rgba(0,0,0,0.25);
-            background: rgba(255, 255, 255, 0.95);
+        /* Profile picture circle */
+        .profile-card .profile-pic {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 2px solid #d4c4b4;
+            flex-shrink: 0;
         }
 
-        /* CUSTOMIZATION: Link text and styling */
-        .link-box a {
-            color: #667eea; /* EDIT: Change link color */
-            text-decoration: none;
-            font-size: 1.4rem; /* EDIT: Change link size */
+        /* Text info next to profile pic */
+        .profile-card .profile-info {
+            flex-grow: 1;
+        }
+
+        .profile-card .profile-name {
+            font-size: 1.3rem;
+            color: #3a2f26;
+            margin-bottom: 0.5rem;
             font-weight: bold;
-            display: inline-block;
-            position: relative;
         }
 
-        /* Animated underline on hover */
-        .link-box a::after {
-            content: '';
-            position: absolute;
-            bottom: -3px;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: linear-gradient(90deg, #667eea, #764ba2);
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.3s ease;
-        }
-
-        .link-box a:hover::after {
-            transform: scaleX(1);
-        }
-
-        /* Description text below link */
-        .link-box p {
-            margin-top: 0.5rem;
-            font-size: 1rem;
-            color: #5a5a5a;
+        .profile-card .profile-stats {
+            font-size: 0.95rem;
+            color: #6a5a4a;
             line-height: 1.5;
         }
 
-        /* Instagram embed container */
-        .instagram-embed {
-            margin: 2rem 0;
-            text-align: center;
-            background: #fff;
-            padding: 1rem;
-            border-radius: 12px;
-            box-shadow: 3px 6px 15px rgba(0,0,0,0.15);
+        .profile-card .profile-link {
+            /* BUTTON: Visit profile */
+            display: inline-block;
+            padding: 0.6rem 1.2rem;
+            background: #f4e8d8;
+            color: #4a3f35;
+            text-decoration: none;
+            border-radius: 5px;
+            border: 1px solid #d4c4b4;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
         }
 
         /* ============================================
            JOURNAL FORM STYLE
-           - Contact/conversation form
+           Contact/conversation form
+           
+           TO ADD YOUR OWN BACKGROUND:
+           Upload 'form-bg.png' and uncomment below
            ============================================ */
         .journal-form {
-            background: #fff;
-            padding: 2rem;
-            box-shadow: 5px 8px 20px rgba(0,0,0,0.2);
-            transform: rotate(0.5deg);
+            /* BACKGROUND: White paper */
+            background: #fffef9;
+            
+            /* TO USE YOUR IMAGE: Uncomment and upload 'form-bg.png' */
+            /* background-image: url('form-bg.png'); */
+            background-size: cover;
+            
+            /* SPACING: Extra padding for image edges */
+            padding: 2.5rem;
+            
+            box-shadow: 3px 5px 10px rgba(0,0,0,0.15);
+            transform: rotate(0.3deg);
             max-width: 600px;
             margin: 2rem auto;
-            border-radius: 8px;
-            transition: transform 0.3s ease;
+            border-radius: 5px;
+            border: 1px solid #e4d4c4;
         }
 
-        .journal-form:hover {
-            transform: rotate(0deg);
-        }
-
-        /* CUSTOMIZATION: Form inputs */
+        /* INPUT FIELDS */
         .journal-form input,
         .journal-form textarea {
             width: 100%;
-            padding: 1rem;
+            padding: 0.9rem;
             margin: 1rem 0;
+            
+            /* BORDER: Simple bottom line */
             border: none;
-            border-bottom: 2px solid #d9d9d9;
+            border-bottom: 1px solid #d4c4b4;
+            
+            /* BACKGROUND: Lined paper effect */
             background: repeating-linear-gradient(
                 transparent,
-                transparent 31px,
-                #e8e8e8 31px,
-                #e8e8e8 32px
+                transparent 30px,
+                #f0e8e0 30px,
+                #f0e8e0 31px
             );
-            font-family: 'Courier New', monospace;
-            font-size: 1.1rem; /* EDIT: Change input text size */
-            line-height: 2;
+            
+            /* FONT: Matches site font */
+            font-family: 'Georgia', serif;
+            font-size: 1rem;
+            line-height: 1.9;
+            color: #4a3f35;
+            
             resize: none;
-            transition: border-color 0.3s ease;
         }
 
         .journal-form input {
@@ -487,68 +465,69 @@
         }
 
         .journal-form textarea {
-            min-height: 200px;
+            min-height: 180px;
         }
 
         .journal-form input:focus,
         .journal-form textarea:focus {
             outline: none;
-            border-bottom-color: #667eea;
+            border-bottom-color: #8a7a6a;
         }
 
-        /* CUSTOMIZATION: Submit button */
+        /* SUBMIT BUTTON */
         .submit-btn {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            border: none;
-            padding: 1rem 2.5rem;
-            font-family: 'Courier New', monospace;
-            font-size: 1.1rem;
-            color: #fff;
+            background: #f4e8d8;
+            border: 1px solid #c4b4a4;
+            padding: 0.8rem 2rem;
+            font-family: 'Georgia', serif;
+            font-size: 1rem;
+            color: #4a3f35;
             cursor: pointer;
-            transform: rotate(-1deg);
-            transition: all 0.3s ease;
             margin-top: 1rem;
-            border-radius: 5px;
-            box-shadow: 3px 5px 10px rgba(0,0,0,0.2);
+            border-radius: 4px;
         }
 
         .submit-btn:hover {
-            transform: rotate(0deg) scale(1.05);
-            box-shadow: 5px 8px 15px rgba(0,0,0,0.3);
-        }
-
-        .submit-btn:active {
-            transform: scale(0.98);
+            background: #e4d8c8;
         }
 
         /* ============================================
            EMAIL SIGNUP BOX
+           Inner circle email capture
+           
+           TO ADD YOUR OWN BACKGROUND:
+           Upload 'email-box-bg.png' and uncomment below
            ============================================ */
         .email-box {
-            background: rgba(255, 255, 255, 0.95);
+            background: #fffef9;
+            
+            /* TO USE YOUR IMAGE: Uncomment and upload 'email-box-bg.png' */
+            /* background-image: url('email-box-bg.png'); */
+            background-size: cover;
+            
             padding: 2rem;
-            box-shadow: 5px 8px 20px rgba(0,0,0,0.2);
+            box-shadow: 3px 5px 10px rgba(0,0,0,0.15);
             max-width: 500px;
             margin: 2rem auto;
-            transform: rotate(-1deg);
-            border-radius: 8px;
-            border: 3px solid #667eea;
+            transform: rotate(-0.5deg);
+            border-radius: 5px;
+            border: 2px solid #d4c4b4;
         }
 
         .email-box input[type="email"] {
             width: 100%;
-            padding: 1rem;
+            padding: 0.9rem;
             margin: 1rem 0;
-            border: 2px solid #d9d9d9;
-            font-family: 'Courier New', monospace;
-            font-size: 1.1rem;
-            border-radius: 5px;
-            transition: border-color 0.3s ease;
+            border: 1px solid #d4c4b4;
+            font-family: 'Georgia', serif;
+            font-size: 1rem;
+            border-radius: 4px;
+            color: #4a3f35;
         }
 
         .email-box input[type="email"]:focus {
             outline: none;
-            border-color: #667eea;
+            border-color: #8a7a6a;
         }
 
         .checkbox-container {
@@ -559,17 +538,17 @@
         }
 
         .checkbox-container input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
+            width: 18px;
+            height: 18px;
             margin-right: 0.5rem;
             cursor: pointer;
         }
 
         /* ============================================
            EXIT SECTION
+           Goodbye message at bottom
            ============================================ */
         .exit {
-            background: transparent;
             min-height: 50vh;
         }
 
@@ -579,13 +558,14 @@
         }
 
         .exit-text p {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             margin: 1rem 0;
+            color: #5a4a3a;
         }
 
         /* ============================================
            FADE-IN ANIMATION
-           - For elements that appear after interaction
+           For elements that appear after user interaction
            ============================================ */
         .fade-in {
             opacity: 0;
@@ -597,58 +577,79 @@
         }
 
         /* ============================================
-           RESPONSIVE DESIGN - MOBILE
+           RESPONSIVE - MOBILE ADJUSTMENTS
+           Makes everything readable on phones
            ============================================ */
         @media (max-width: 768px) {
+            /* Smaller text on mobile */
             .entrance h1 {
-                font-size: 2.5rem; /* Smaller on mobile */
+                font-size: 2.5rem;
             }
 
             .entrance h2 {
-                font-size: 1.3rem;
+                font-size: 1.2rem;
             }
 
             .entrance .hindi-name {
-                font-size: 1.8rem;
+                font-size: 1.6rem;
+            }
+
+            /* Narrower video on mobile */
+            .polaroid {
+                max-width: 90%;
             }
 
             .polaroid iframe {
                 height: 200px;
             }
 
+            /* Less padding on mobile */
             section {
                 padding: 3rem 1rem;
             }
 
-            .note p,
-            .link-box a {
+            .note p {
                 font-size: 1rem;
+            }
+
+            /* Stack profile cards vertically on mobile */
+            .profile-card {
+                flex-direction: column;
+                text-align: center;
             }
 
             .status-box,
             .lyrics-box {
-                padding: 1.5rem;
+                padding: 1.2rem 1.5rem;
             }
 
             .lyrics-text {
-                font-size: 1.1rem;
+                font-size: 1rem;
             }
         }
 
-        /* Handwritten font class */
+        /* Simple handwritten-style class */
         .handwritten {
-            font-family: 'Courier New', cursive;
+            font-family: 'Georgia', serif;
             font-weight: normal;
             line-height: 1.6;
+            font-style: italic;
         }
     </style>
 </head>
 <body>
     <!-- ============================================
          BACKGROUND IMAGES
-         CUSTOMIZATION: Replace with your images
-         - background-desktop.jpg (1920×5500px)
-         - background-mobile.jpg (750×6500px)
+         
+         HOW TO ADD YOUR IMAGES:
+         1. Create two long vertical images:
+            - Desktop: 1920px wide × 5500px tall
+            - Mobile: 750px wide × 6500px tall
+         2. Save as:
+            - background-desktop.jpg
+            - background-mobile.jpg
+         3. Upload both to your GitHub repository
+         4. They will automatically appear as background
          ============================================ -->
     <div class="background-wrapper">
         <img src="background-desktop.jpg" alt="" class="background-image desktop">
@@ -659,10 +660,11 @@
     
     <!-- ============================================
          ENTRANCE SECTION
-         CUSTOMIZATION:
-         - Change greeting text in h2
-         - Change artist name in h1
-         - Change Hindi name in .hindi-name
+         
+         WHAT YOU CAN EDIT:
+         - Line 485: Change greeting text
+         - Line 486: Change artist name "Sackhaa"
+         - Line 487: Change Hindi name
          ============================================ -->
     <div class="entrance">
         <div class="entrance-text">
@@ -677,9 +679,13 @@
 
     <!-- ============================================
          LISTENING ROOM - Latest Video
-         CUSTOMIZATION:
-         - Replace YOUR_VIDEO_ID with your YouTube video ID
-         - Change caption text in .note
+         
+         WHAT YOU CAN EDIT:
+         - Lines 504-505: Change caption text
+         - Line 511: Replace YOUR_VIDEO_ID with your actual YouTube video ID
+                     Example: If video URL is youtube.com/watch?v=abc123
+                     Then replace YOUR_VIDEO_ID with abc123
+         - Line 517: Change "Latest track" caption
          ============================================ -->
     <section class="listening-room">
         <div class="section-content">
@@ -689,12 +695,11 @@
             </div>
 
             <div class="polaroid">
-                <!-- REPLACE: YOUR_VIDEO_ID with actual YouTube video ID -->
+                <!-- YouTube Video ID: NGLHQduF4wc -->
                 <iframe 
-                    src="https://www.youtube.com/embed/NGLHQduF4wc?si=GxCn4T_bsiIBeZjH?enablejsapi=1" 
+                    src="https://www.youtube.com/embed/NGLHQduF4wc" 
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                    allowfullscreen
-                    id="youtube-player">
+                    allowfullscreen>
                 </iframe>
                 <div class="polaroid-caption">Latest track</div>
             </div>
@@ -708,14 +713,22 @@
 
     <!-- ============================================
          PERSONAL TOUCH SECTION
-         STATUS UPDATE + ROTATING LYRICS
+         Status update + Rotating lyrics
+         
+         WHAT YOU CAN EDIT:
+         STATUS BOX (Lines 540-543):
+         - Change status text to your current feeling
+         - Update date stamp
+         
+         LYRICS BOX (Lines 550-553):
+         - Change lyrics to lines from your songs
+         - Update song name
+         - Rotate these whenever you want
          ============================================ -->
     <section class="personal-touch">
         <div class="section-content">
             
-            <!-- STATUS UPDATE BOX 
-                 CUSTOMIZATION: Update .status-text with your current feeling
-                 Update .status-date with today's date -->
+            <!-- STATUS UPDATE - Edit text below -->
             <div class="status-box">
                 <h3>Right now, I'm...</h3>
                 <p class="status-text">
@@ -724,11 +737,7 @@
                 <p class="status-date">— Updated Nov 15, 2024</p>
             </div>
 
-            <!-- ROTATING LYRICS BOX 
-                 CUSTOMIZATION:
-                 - Add your own lyrics in .lyrics-text
-                 - Update song name in .lyrics-source
-                 - To rotate: just change the text periodically -->
+            <!-- ROTATING LYRICS - Edit text below -->
             <div class="lyrics-box">
                 <h3>Lines I've been carrying</h3>
                 <p class="lyrics-text">
@@ -742,11 +751,22 @@
     </section>
 
     <!-- ============================================
-         WORK DESK - YouTube & Instagram
-         CUSTOMIZATION:
-         - Replace YouTube channel URL
-         - Replace Instagram username
-         - Change caption texts
+         WORK DESK - YouTube & Instagram Profiles
+         
+         WHAT YOU CAN EDIT:
+         - Lines 573-574: Change intro text
+         
+         YOUTUBE PROFILE (Lines 581-590):
+         - Line 584: Add your YouTube channel name
+         - Line 586: Add subscriber count
+         - Line 587: Add video count
+         - Line 589: Replace with your YouTube channel URL
+         
+         INSTAGRAM PROFILE (Lines 597-606):
+         - Line 600: Add your Instagram handle
+         - Line 602: Add follower count
+         - Line 603: Add post count
+         - Line 605: Replace with your Instagram URL
          ============================================ -->
     <section class="work-desk">
         <div class="section-content">
@@ -755,44 +775,33 @@
                 <p class="handwritten">the finished pieces, the process, the in-between moments.</p>
             </div>
 
-            <!-- YOUTUBE SECTION -->
-            <div class="link-box">
-                <a href="https://youtube.com/@sackhha" target="_blank">📼 The sounds →</a>
-                <p>Everything I've made. Some finished, some still finding their shape. Sit with whatever calls to you.</p>
-            </div>
-
-            <!-- INSTAGRAM EMBED 
-                 CUSTOMIZATION: Replace "yourhandle" with your actual Instagram username -->
-            <div class="instagram-embed">
-                <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/sackhha/" data-instgrm-version="14" style="background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:540px; min-width:326px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);">
-                    <div style="padding:16px;">
-                        <a href="https://www.instagram.com/yourhandle/" style="background:#FFFFFF; line-height:0; padding:0 0; text-align:center; text-decoration:none; width:100%;" target="_blank">
-                            <div style="display: flex; flex-direction: row; align-items: center;">
-                                <div style="background-color: #F4F4F4; border-radius: 50%; flex-grow: 0; height: 40px; margin-right: 14px; width: 40px;"></div>
-                                <div style="display: flex; flex-direction: column; flex-grow: 1; justify-content: center;">
-                                    <div style="background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; margin-bottom: 6px; width: 100px;"></div>
-                                    <div style="background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; width: 60px;"></div>
-                                </div>
-                            </div>
-                            <div style="padding: 19% 0;"></div>
-                            <div style="display:block; height:50px; margin:0 auto 12px; width:50px;">
-                                <svg width="50px" height="50px" viewBox="0 0 60 60" version="1.1" xmlns="https://www.w3.org/2000/svg">
-                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                        <g transform="translate(-511.000000, -20.000000)" fill="#000000">
-                                            <g><path d="M556.869,30.41 C554.814,30.41 553.148,32.076 553.148,34.131 C553.148,36.186 554.814,37.852 556.869,37.852 C558.924,37.852 560.59,36.186 560.59,34.131 C560.59,32.076 558.924,30.41 556.869,30.41 M541,60.657 C535.114,60.657 530.342,55.887 530.342,50 C530.342,44.114 535.114,39.342 541,39.342 C546.887,39.342 551.658,44.114 551.658,50 C551.658,55.887 546.887,60.657 541,60.657 M541,33.886 C532.1,33.886 524.886,41.1 524.886,50 C524.886,58.899 532.1,66.113 541,66.113 C549.9,66.113 557.115,58.899 557.115,50 C557.115,41.1 549.9,33.886 541,33.886 M565.378,62.101 C565.244,65.022 564.756,66.606 564.346,67.663 C563.803,69.06 563.154,70.057 562.106,71.106 C561.058,72.155 560.06,72.803 558.662,73.347 C557.607,73.757 556.021,74.244 553.102,74.378 C549.944,74.521 548.997,74.552 541,74.552 C533.003,74.552 532.056,74.521 528.898,74.378 C525.979,74.244 524.393,73.757 523.338,73.347 C521.94,72.803 520.942,72.155 519.894,71.106 C518.846,70.057 518.197,69.06 517.654,67.663 C517.244,66.606 516.755,65.022 516.623,62.101 C516.479,58.943 516.448,57.996 516.448,50 C516.448,42.003 516.479,41.056 516.623,37.899 C516.755,34.978 517.244,33.391 517.654,32.338 C518.197,30.938 518.846,29.942 519.894,28.894 C520.942,27.846 521.94,27.196 523.338,26.654 C524.393,26.244 525.979,25.756 528.898,25.623 C532.057,25.479 533.004,25.448 541,25.448 C548.997,25.448 549.943,25.479 553.102,25.623 C556.021,25.756 557.607,26.244 558.662,26.654 C560.06,27.196 561.058,27.846 562.106,28.894 C563.154,29.942 563.803,30.938 564.346,32.338 C564.756,33.391 565.244,34.978 565.378,37.899 C565.522,41.056 565.552,42.003 565.552,50 C565.552,57.996 565.522,58.943 565.378,62.101 M570.82,37.631 C570.674,34.438 570.167,32.258 569.425,30.349 C568.659,28.377 567.633,26.702 565.965,25.035 C564.297,23.368 562.623,22.342 560.652,21.575 C558.743,20.834 556.562,20.326 553.369,20.18 C550.169,20.033 549.148,20 541,20 C532.853,20 531.831,20.033 528.631,20.18 C525.438,20.326 523.257,20.834 521.349,21.575 C519.376,22.342 517.703,23.368 516.035,25.035 C514.368,26.702 513.342,28.377 512.574,30.349 C511.834,32.258 511.326,34.438 511.181,37.631 C511.035,40.831 511,41.851 511,50 C511,58.147 511.035,59.17 511.181,62.369 C511.326,65.562 511.834,67.743 512.574,69.651 C513.342,71.625 514.368,73.296 516.035,74.965 C517.703,76.634 519.376,77.658 521.349,78.425 C523.257,79.167 525.438,79.673 528.631,79.82 C531.831,79.965 532.853,80.001 541,80.001 C549.148,80.001 550.169,79.965 553.369,79.82 C556.562,79.673 558.743,79.167 560.652,78.425 C562.623,77.658 564.297,76.634 565.965,74.965 C567.633,73.296 568.659,71.625 569.425,69.651 C570.167,67.743 570.674,65.562 570.82,62.369 C570.966,59.17 571,58.147 571,50 C571,41.851 570.966,40.831 570.82,37.631"></path></g>
-                                        </g>
-                                    </g>
-                                </svg>
-                            </div>
-                            <div style="padding-top: 8px;">
-                                <div style="color:#3897f0; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:550; line-height:18px;">View this profile on Instagram</div>
-                            </div>
-                        </a>
+            <!-- YOUTUBE PROFILE CARD -->
+            <div class="profile-card">
+                <img src="https://via.placeholder.com/80" alt="YouTube Profile" class="profile-pic">
+                <div class="profile-info">
+                    <div class="profile-name">📼 Sackhha</div>
+                    <div class="profile-stats">
+                        <div>Subscribers: 1.2K</div>
+                        <div>Videos: 24</div>
                     </div>
-                </blockquote>
-                <script async src="//www.instagram.com/embed.js"></script>
+                    <a href="https://youtube.com/@sackhha" class="profile-link" target="_blank">Visit Channel →</a>
+                </div>
             </div>
 
+            <!-- INSTAGRAM PROFILE CARD -->
+            <div class="profile-card">
+                <img src="https://via.placeholder.com/80" alt="Instagram Profile" class="profile-pic">
+                <div class="profile-info">
+                    <div class="profile-name">📸 @sackhha</div>
+                    <div class="profile-stats">
+                        <div>Followers: 890</div>
+                        <div>Posts: 47</div>
+                    </div>
+                    <a href="https://instagram.com/sackhha" class="profile-link" target="_blank">Visit Profile →</a>
+                </div>
+            </div>
+
+            <!-- Placeholder for future platforms -->
             <div class="note" style="opacity: 0.7;">
                 <p class="handwritten" style="font-size: 0.95rem;">
                     (Spotify/Bandcamp coming when it feels right)
@@ -803,9 +812,13 @@
 
     <!-- ============================================
          CONVERSATION CORNER
-         CUSTOMIZATION:
-         - Update Formspree form action URL
-         - Change intro text to match your voice
+         Contact form for visitors to share thoughts
+         
+         WHAT YOU CAN EDIT:
+         - Lines 635-637: Change intro text
+         - Line 642: Replace YOUR_FORM_ID with your Formspree form ID
+                     Get this from formspree.io after signing up
+         - Lines 644-655: Change form labels/placeholders
          ============================================ -->
     <section class="conversation-corner">
         <div class="section-content">
@@ -815,7 +828,7 @@
                 <p class="handwritten">Whatever's on your mind—share it here. I'm listening the same way you listen to these sounds.</p>
             </div>
 
-            <!-- FORM ACTION: Replace YOUR_FORM_ID with your Formspree form ID -->
+            <!-- FORM: Formspree ID xnnlparj -->
             <form class="journal-form" action="https://formspree.io/f/xnnlparj" method="POST">
                 <input 
                     type="text" 
@@ -840,9 +853,12 @@
 
     <!-- ============================================
          INNER ROOM - Email Signup
-         CUSTOMIZATION:
-         - Update Formspree form action URL
-         - Change intro text
+         For people who want to stay close
+         
+         WHAT YOU CAN EDIT:
+         - Lines 676-680: Change intro text
+         - Line 685: Replace YOUR_FORM_ID with same Formspree ID
+         - Line 687: Change "If you want in" text
          ============================================ -->
     <section class="inner-room">
         <div class="section-content">
@@ -854,7 +870,7 @@
                 <p class="handwritten" style="margin-top: 1rem;">Just between us.</p>
             </div>
 
-            <!-- FORM ACTION: Replace YOUR_FORM_ID with your Formspree form ID -->
+            <!-- EMAIL FORM: Formspree ID xnnlparj -->
             <div class="email-box">
                 <form action="https://formspree.io/f/xnnlparj" method="POST">
                     <p class="handwritten">If you want in—</p>
@@ -869,7 +885,7 @@
                         <span class="handwritten">Yeah, I want to stay</span>
                     </label>
                     <button type="submit" class="submit-btn">→ Count me in</button>
-                    <p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.7;">
+                    <p style="margin-top: 1rem; font-size: 0.85rem; opacity: 0.7;">
                         No schedule. No spam.<br>
                         Just me, sharing things when they feel ready.<br>
                         You can leave anytime.
@@ -881,18 +897,19 @@
 
     <!-- ============================================
          EXIT SECTION
-         CUSTOMIZATION:
-         - Change goodbye text
-         - Update location if needed
+         Goodbye message
+         
+         WHAT YOU CAN EDIT:
+         - Lines 719-724: Change goodbye text
          ============================================ -->
     <section class="exit">
         <div class="section-content">
             <div class="exit-text">
-                <p class="handwritten" style="font-size: 1.3rem;">That's everything.</p>
+                <p class="handwritten" style="font-size: 1.2rem;">That's everything.</p>
                 <p class="handwritten" style="margin-top: 1.5rem;">You can leave anytime,</p>
                 <p class="handwritten">or scroll back up and stay a while.</p>
-                <p class="handwritten" style="margin-top: 2rem; font-size: 1.1rem;">Thanks for being here.</p>
-                <p style="margin-top: 3rem; font-size: 0.85rem; opacity: 0.6;">
+                <p class="handwritten" style="margin-top: 2rem;">Thanks for being here.</p>
+                <p style="margin-top: 3rem; font-size: 0.8rem; opacity: 0.6;">
                     Made by hand<br>
                     Updated whenever it feels right<br>
                     सखा
@@ -903,47 +920,28 @@
 
     <!-- ============================================
          JAVASCRIPT
-         - Handles fade-in animations
-         - Smooth scrolling
-         - Parallax effects
+         Handles animations and interactions
+         
+         WHAT THIS DOES:
+         - Fades in "Still here?" message after 30 seconds
+         - Smooth scrolling when arrow is clicked
+         - You don't need to edit this unless adding new features
          ============================================ -->
     <script>
-        // Fade in "Still here?" after 30 seconds
+        // FADE IN MESSAGE: Shows "Still here?" after user watches video for 30 seconds
         const stillHereElement = document.getElementById('still-here');
         setTimeout(() => {
             stillHereElement.classList.add('visible');
-        }, 30000);
+        }, 30000); // 30000 = 30 seconds. Change number to adjust timing.
 
-        // Smooth scroll for entrance arrow
+        // SMOOTH SCROLL: When down arrow is clicked, smoothly scroll to listening room
         document.querySelector('.arrow-down').addEventListener('click', function() {
             document.querySelector('.listening-room').scrollIntoView({
-                behavior: 'smooth'
+                behavior: 'smooth' // Makes scrolling smooth instead of instant jump
             });
-        });
-
-        // Subtle parallax effect on scroll
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const parallaxElements = document.querySelectorAll('.note, .polaroid, .link-box, .status-box, .lyrics-box');
-            
-            parallaxElements.forEach((el, index) => {
-                const speed = 0.3 + (index * 0.05);
-                const yPos = -(scrolled * speed / 100);
-                const rotation = index % 2 ? 1 : -1;
-                el.style.transform = `translateY(${yPos}px) rotate(${rotation}deg)`;
-            });
-        });
-
-        // Add entrance animation on page load
-        window.addEventListener('load', () => {
-            document.body.style.opacity = '0';
-            setTimeout(() => {
-                document.body.style.transition = 'opacity 1s ease-in';
-                document.body.style.opacity = '1';
-            }, 100);
         });
     </script>
     
-    </div> <!-- Close content-wrapper -->
+    </div> <!-- Closes content-wrapper -->
 </body>
 </html>
