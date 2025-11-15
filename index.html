@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sackhaa - सखा</title>
     <style>
+        /* ============================================
+           GLOBAL STYLES
+           ============================================ */
         * {
             margin: 0;
             padding: 0;
@@ -18,7 +21,12 @@
             position: relative;
         }
 
-        /* Background Image Container */
+        /* ============================================
+           BACKGROUND IMAGE SYSTEM
+           - Uses one long vertical image
+           - Scrolls with the page
+           - Separate images for desktop/mobile
+           ============================================ */
         .background-wrapper {
             position: absolute;
             top: 0;
@@ -40,7 +48,7 @@
             display: none;
         }
 
-        /* On mobile screens, show mobile image and hide desktop */
+        /* On mobile: show mobile image, hide desktop */
         @media (max-width: 768px) {
             .background-image.desktop {
                 display: none;
@@ -50,20 +58,17 @@
             }
         }
 
-        /* Content wrapper to ensure text is above background */
+        /* Content wrapper - ensures all content appears above background */
         .content-wrapper {
             position: relative;
             z-index: 1;
         }
 
-        /* Handwritten font styling */
-        .handwritten {
-            font-family: 'Courier New', cursive;
-            font-weight: normal;
-            line-height: 1.6;
-        }
-
-        /* Entrance Section */
+        /* ============================================
+           ENTRANCE SECTION
+           - First thing visitors see
+           - Artist name + greeting
+           ============================================ */
         .entrance {
             height: 100vh;
             display: flex;
@@ -75,6 +80,7 @@
             background: transparent;
         }
 
+        /* Subtle noise texture overlay for depth */
         .entrance::before {
             content: '';
             position: absolute;
@@ -84,33 +90,67 @@
             bottom: 0;
             background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" stitchTiles="stitch"/></filter><rect width="100" height="100" filter="url(%23noise)" opacity="0.05"/></svg>');
             opacity: 0.3;
+            animation: subtleMove 20s ease-in-out infinite;
+        }
+
+        @keyframes subtleMove {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(-2px, -2px); }
         }
 
         .entrance-text {
             text-align: center;
-            color: #fff;
             z-index: 1;
             padding: 2rem;
+            animation: fadeIn 1.5s ease-in;
         }
 
-        .entrance h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* CUSTOMIZATION: Main greeting text */
+        .entrance h2 {
+            font-size: 1.8rem; /* EDIT: Change size here */
+            margin-bottom: 2rem;
             transform: rotate(-1deg);
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            color: #3a2f26; /* EDIT: Change color here */
+            font-weight: normal;
+            text-shadow: 2px 2px 4px rgba(255,255,255,0.3);
         }
 
-        .entrance p {
-            font-size: 1.2rem;
-            margin: 1rem 0;
-            opacity: 0.9;
+        /* CUSTOMIZATION: Artist name - "Sackhaa" */
+        .entrance h1 {
+            font-size: 4rem; /* EDIT: Change size here */
+            margin-bottom: 0.5rem;
+            transform: rotate(-2deg);
+            color: #667eea; /* EDIT: Change color here */
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.2);
+            font-weight: bold;
+            letter-spacing: 2px;
         }
 
+        /* CUSTOMIZATION: Hindi name below */
+        .entrance .hindi-name {
+            font-size: 2.5rem; /* EDIT: Change size here */
+            color: #764ba2; /* EDIT: Change color here */
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+
+        /* Animated arrow pointing down */
         .arrow-down {
             font-size: 2rem;
             animation: bounce 2s infinite;
             cursor: pointer;
             margin-top: 2rem;
+            color: #667eea;
+            transition: transform 0.3s ease;
+        }
+
+        .arrow-down:hover {
+            transform: scale(1.2);
         }
 
         @keyframes bounce {
@@ -118,7 +158,10 @@
             50% { transform: translateY(-10px); }
         }
 
-        /* Section Container */
+        /* ============================================
+           SECTION CONTAINER - SHARED STYLES
+           - All sections use these base styles
+           ============================================ */
         section {
             min-height: 100vh;
             padding: 4rem 2rem;
@@ -134,32 +177,76 @@
             max-width: 800px;
             width: 100%;
             position: relative;
+            animation: fadeInUp 0.8s ease-out;
         }
 
-        /* Paper texture overlay */
-        section::before {
-            content: '';
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ============================================
+           STICKY NOTE STYLE
+           - Yellow notes with pushpins
+           - Used throughout for text content
+           ============================================ */
+        .note {
+            background: linear-gradient(135deg, #fffacd 0%, #fff9b8 100%); /* EDIT: Change colors here */
+            padding: 1.5rem;
+            margin: 2rem 0;
+            box-shadow: 3px 5px 15px rgba(0,0,0,0.2);
+            transform: rotate(1deg); /* EDIT: Change rotation angle */
+            border-left: 3px solid #f0e68c;
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .note:hover {
+            transform: rotate(0deg) translateY(-3px);
+            box-shadow: 5px 8px 20px rgba(0,0,0,0.25);
+        }
+
+        /* Pushpin decoration */
+        .note::before {
+            content: '📌';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" stitchTiles="stitch"/></filter><rect width="100" height="100" filter="url(%23noise)" opacity="0.03"/></svg>');
-            pointer-events: none;
+            top: -10px;
+            left: 20px;
+            font-size: 1.5rem;
+            animation: pinWiggle 3s ease-in-out infinite;
         }
 
-        /* Listening Room */
-        .listening-room {
-            background: transparent;
+        @keyframes pinWiggle {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-5deg); }
+            75% { transform: rotate(5deg); }
         }
 
+        /* CUSTOMIZATION: Note text */
+        .note p {
+            font-size: 1.2rem; /* EDIT: Change text size */
+            line-height: 1.8;
+            margin: 0.5rem 0;
+            color: #3a2f26; /* EDIT: Change text color */
+        }
+
+        /* ============================================
+           POLAROID FRAME STYLE
+           - For video embeds
+           ============================================ */
         .polaroid {
             background: #fff;
             padding: 1rem;
-            box-shadow: 3px 5px 15px rgba(0,0,0,0.2);
+            padding-bottom: 3rem;
+            box-shadow: 5px 8px 20px rgba(0,0,0,0.25);
             transform: rotate(-2deg);
             margin: 2rem auto;
             max-width: 90%;
+            transition: transform 0.3s ease;
+        }
+
+        .polaroid:hover {
+            transform: rotate(0deg) scale(1.02);
         }
 
         .polaroid iframe {
@@ -168,75 +255,166 @@
             border: none;
         }
 
-        .note {
-            background: #fffacd;
-            padding: 1.5rem;
-            margin: 2rem 0;
-            box-shadow: 2px 3px 8px rgba(0,0,0,0.15);
-            transform: rotate(1deg);
-            border-left: 3px solid #f0e68c;
-            position: relative;
+        /* Caption below video (like Polaroid writing) */
+        .polaroid-caption {
+            text-align: center;
+            margin-top: 1rem;
+            font-family: 'Courier New', cursive;
+            font-size: 0.9rem;
+            color: #666;
         }
 
-        .note::before {
-            content: '📌';
-            position: absolute;
-            top: -10px;
-            left: 20px;
+        /* ============================================
+           PERSONAL TOUCH SECTIONS
+           - Status update (you edit manually)
+           - Rotating lyrics display
+           ============================================ */
+
+        /* STATUS UPDATE BOX */
+        .status-box {
+            background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%);
+            padding: 2rem;
+            margin: 3rem 0;
+            border-radius: 15px;
+            box-shadow: 5px 8px 25px rgba(0,0,0,0.3);
+            transform: rotate(-1deg);
+            animation: gentlePulse 4s ease-in-out infinite;
+        }
+
+        @keyframes gentlePulse {
+            0%, 100% { transform: rotate(-1deg) scale(1); }
+            50% { transform: rotate(1deg) scale(1.02); }
+        }
+
+        .status-box h3 {
+            color: #fff;
             font-size: 1.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
 
-        .note p {
-            font-size: 1.2rem;
-            line-height: 1.8;
-            margin: 0.5rem 0;
+        /* CUSTOMIZATION: Your current status/feeling */
+        .status-box .status-text {
+            color: #fff;
+            font-size: 1.3rem; /* EDIT: Change size */
+            font-style: italic;
+            line-height: 1.6;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
         }
 
-        .fade-in {
-            opacity: 0;
-            transition: opacity 1s ease-in;
+        .status-box .status-date {
+            color: rgba(255,255,255,0.8);
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            text-align: right;
         }
 
-        .fade-in.visible {
-            opacity: 1;
+        /* LYRICS DISPLAY BOX */
+        .lyrics-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2.5rem;
+            margin: 3rem 0;
+            border-radius: 15px;
+            box-shadow: 5px 8px 25px rgba(0,0,0,0.3);
+            transform: rotate(1deg);
+            position: relative;
+            overflow: hidden;
         }
 
-        /* Work Desk Section */
-        .work-desk {
-            background: transparent;
+        /* Animated background shimmer */
+        .lyrics-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent 30%,
+                rgba(255,255,255,0.1) 50%,
+                transparent 70%
+            );
+            animation: shimmer 6s infinite;
         }
 
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .lyrics-box h3 {
+            color: #fff;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* CUSTOMIZATION: The actual lyrics text */
+        .lyrics-text {
+            color: #fff;
+            font-size: 1.4rem; /* EDIT: Change size */
+            font-style: italic;
+            line-height: 2;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            margin: 1.5rem 0;
+        }
+
+        /* Song attribution */
+        .lyrics-source {
+            color: rgba(255,255,255,0.9);
+            font-size: 1rem;
+            text-align: right;
+            margin-top: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ============================================
+           LINK BOXES
+           - For YouTube, Instagram, etc.
+           ============================================ */
         .link-box {
-            background: rgba(255, 255, 255, 0.7);
+            background: rgba(255, 255, 255, 0.85);
             padding: 1.5rem;
             margin: 1.5rem 0;
-            border-radius: 8px;
-            box-shadow: 2px 4px 12px rgba(0,0,0,0.1);
+            border-radius: 12px;
+            box-shadow: 3px 6px 15px rgba(0,0,0,0.15);
             transform: rotate(-0.5deg);
-            transition: transform 0.3s ease;
+            transition: all 0.3s ease;
+            border-left: 4px solid #667eea;
         }
 
         .link-box:hover {
-            transform: rotate(0deg) translateY(-3px);
+            transform: rotate(0deg) translateY(-5px);
+            box-shadow: 5px 10px 25px rgba(0,0,0,0.25);
+            background: rgba(255, 255, 255, 0.95);
         }
 
+        /* CUSTOMIZATION: Link text and styling */
         .link-box a {
-            color: #667eea;
+            color: #667eea; /* EDIT: Change link color */
             text-decoration: none;
-            font-size: 1.3rem;
+            font-size: 1.4rem; /* EDIT: Change link size */
             font-weight: bold;
             display: inline-block;
             position: relative;
         }
 
+        /* Animated underline on hover */
         .link-box a::after {
             content: '';
             position: absolute;
             bottom: -3px;
             left: 0;
             width: 100%;
-            height: 2px;
-            background: #667eea;
+            height: 3px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
             transform: scaleX(0);
             transform-origin: left;
             transition: transform 0.3s ease;
@@ -246,26 +424,44 @@
             transform: scaleX(1);
         }
 
+        /* Description text below link */
         .link-box p {
             margin-top: 0.5rem;
             font-size: 1rem;
             color: #5a5a5a;
+            line-height: 1.5;
         }
 
-        /* Conversation Corner */
-        .conversation-corner {
-            background: transparent;
+        /* Instagram embed container */
+        .instagram-embed {
+            margin: 2rem 0;
+            text-align: center;
+            background: #fff;
+            padding: 1rem;
+            border-radius: 12px;
+            box-shadow: 3px 6px 15px rgba(0,0,0,0.15);
         }
 
+        /* ============================================
+           JOURNAL FORM STYLE
+           - Contact/conversation form
+           ============================================ */
         .journal-form {
             background: #fff;
             padding: 2rem;
-            box-shadow: 3px 5px 15px rgba(0,0,0,0.2);
+            box-shadow: 5px 8px 20px rgba(0,0,0,0.2);
             transform: rotate(0.5deg);
             max-width: 600px;
             margin: 2rem auto;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
         }
 
+        .journal-form:hover {
+            transform: rotate(0deg);
+        }
+
+        /* CUSTOMIZATION: Form inputs */
         .journal-form input,
         .journal-form textarea {
             width: 100%;
@@ -276,13 +472,14 @@
             background: repeating-linear-gradient(
                 transparent,
                 transparent 31px,
-                #d9d9d9 31px,
-                #d9d9d9 32px
+                #e8e8e8 31px,
+                #e8e8e8 32px
             );
             font-family: 'Courier New', monospace;
-            font-size: 1.1rem;
+            font-size: 1.1rem; /* EDIT: Change input text size */
             line-height: 2;
             resize: none;
+            transition: border-color 0.3s ease;
         }
 
         .journal-form input {
@@ -299,36 +496,43 @@
             border-bottom-color: #667eea;
         }
 
+        /* CUSTOMIZATION: Submit button */
         .submit-btn {
-            background: none;
-            border: 2px solid #3a2f26;
-            padding: 0.8rem 2rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border: none;
+            padding: 1rem 2.5rem;
             font-family: 'Courier New', monospace;
             font-size: 1.1rem;
+            color: #fff;
             cursor: pointer;
             transform: rotate(-1deg);
             transition: all 0.3s ease;
             margin-top: 1rem;
+            border-radius: 5px;
+            box-shadow: 3px 5px 10px rgba(0,0,0,0.2);
         }
 
         .submit-btn:hover {
-            background: #3a2f26;
-            color: #fff;
-            transform: rotate(0deg);
+            transform: rotate(0deg) scale(1.05);
+            box-shadow: 5px 8px 15px rgba(0,0,0,0.3);
         }
 
-        /* Inner Room */
-        .inner-room {
-            background: transparent;
+        .submit-btn:active {
+            transform: scale(0.98);
         }
 
+        /* ============================================
+           EMAIL SIGNUP BOX
+           ============================================ */
         .email-box {
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.95);
             padding: 2rem;
-            box-shadow: 3px 5px 15px rgba(0,0,0,0.2);
+            box-shadow: 5px 8px 20px rgba(0,0,0,0.2);
             max-width: 500px;
             margin: 2rem auto;
             transform: rotate(-1deg);
+            border-radius: 8px;
+            border: 3px solid #667eea;
         }
 
         .email-box input[type="email"] {
@@ -338,6 +542,13 @@
             border: 2px solid #d9d9d9;
             font-family: 'Courier New', monospace;
             font-size: 1.1rem;
+            border-radius: 5px;
+            transition: border-color 0.3s ease;
+        }
+
+        .email-box input[type="email"]:focus {
+            outline: none;
+            border-color: #667eea;
         }
 
         .checkbox-container {
@@ -354,7 +565,9 @@
             cursor: pointer;
         }
 
-        /* Exit Section */
+        /* ============================================
+           EXIT SECTION
+           ============================================ */
         .exit {
             background: transparent;
             min-height: 50vh;
@@ -365,10 +578,38 @@
             opacity: 0.8;
         }
 
-        /* Responsive */
+        .exit-text p {
+            font-size: 1.2rem;
+            margin: 1rem 0;
+        }
+
+        /* ============================================
+           FADE-IN ANIMATION
+           - For elements that appear after interaction
+           ============================================ */
+        .fade-in {
+            opacity: 0;
+            transition: opacity 1.5s ease-in;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+        }
+
+        /* ============================================
+           RESPONSIVE DESIGN - MOBILE
+           ============================================ */
         @media (max-width: 768px) {
             .entrance h1 {
-                font-size: 2rem;
+                font-size: 2.5rem; /* Smaller on mobile */
+            }
+
+            .entrance h2 {
+                font-size: 1.3rem;
+            }
+
+            .entrance .hindi-name {
+                font-size: 1.8rem;
             }
 
             .polaroid iframe {
@@ -383,104 +624,198 @@
             .link-box a {
                 font-size: 1rem;
             }
+
+            .status-box,
+            .lyrics-box {
+                padding: 1.5rem;
+            }
+
+            .lyrics-text {
+                font-size: 1.1rem;
+            }
         }
 
-        /* Scroll hint */
-        .scroll-hint {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            opacity: 0.3;
-            font-size: 0.9rem;
-            pointer-events: none;
-            z-index: 100;
+        /* Handwritten font class */
+        .handwritten {
+            font-family: 'Courier New', cursive;
+            font-weight: normal;
+            line-height: 1.6;
         }
     </style>
 </head>
 <body>
-    <!-- Background Image Container -->
+    <!-- ============================================
+         BACKGROUND IMAGES
+         CUSTOMIZATION: Replace with your images
+         - background-desktop.jpg (1920×5500px)
+         - background-mobile.jpg (750×6500px)
+         ============================================ -->
     <div class="background-wrapper">
-        <!-- Desktop background image -->
         <img src="background-desktop.jpg" alt="" class="background-image desktop">
-        <!-- Mobile background image -->
         <img src="background-mobile.jpg" alt="" class="background-image mobile">
     </div>
 
-    <!-- All content wrapped -->
     <div class="content-wrapper">
     
-    <!-- Entrance -->
+    <!-- ============================================
+         ENTRANCE SECTION
+         CUSTOMIZATION:
+         - Change greeting text in h2
+         - Change artist name in h1
+         - Change Hindi name in .hindi-name
+         ============================================ -->
     <div class="entrance">
         <div class="entrance-text">
-            <h1 class="handwritten">You found your way here.</h1>
-            <p>सखा - friend, companion</p>
+            <h2 class="handwritten">You found your way here.</h2>
+            <h1>Sackhaa</h1>
+            <p class="hindi-name">सखा</p>
             <div class="arrow-down" onclick="document.querySelector('.listening-room').scrollIntoView({behavior: 'smooth'})">
                 ↓<br>Come in
             </div>
         </div>
     </div>
 
-    <!-- Listening Room -->
+    <!-- ============================================
+         LISTENING ROOM - Latest Video
+         CUSTOMIZATION:
+         - Replace YOUR_VIDEO_ID with your YouTube video ID
+         - Change caption text in .note
+         ============================================ -->
     <section class="listening-room">
         <div class="section-content">
             <div class="note">
-                <p class="handwritten">This is what 2am sounded like to me last week.</p>
-                <p class="handwritten">Give it 90 seconds?</p>
+                <p class="handwritten">Here's what came out of the late-night sessions recently.</p>
+                <p class="handwritten">Press play. Let it sit with you.</p>
             </div>
 
             <div class="polaroid">
-                <!-- Replace YOUR_VIDEO_ID with your actual YouTube video ID -->
+                <!-- REPLACE: YOUR_VIDEO_ID with actual YouTube video ID -->
                 <iframe 
                     src="https://www.youtube.com/embed/YOUR_VIDEO_ID?enablejsapi=1" 
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                     allowfullscreen
                     id="youtube-player">
                 </iframe>
+                <div class="polaroid-caption">Latest track</div>
             </div>
 
             <div class="note fade-in" id="still-here">
                 <p class="handwritten">Still here?</p>
-                <p class="handwritten">I'm glad.</p>
-                <p style="margin-top: 1rem;">↓ Let me show you around</p>
+                <p class="handwritten">Good. There's more.</p>
             </div>
         </div>
     </section>
 
-    <!-- Work Desk -->
+    <!-- ============================================
+         PERSONAL TOUCH SECTION
+         STATUS UPDATE + ROTATING LYRICS
+         ============================================ -->
+    <section class="personal-touch">
+        <div class="section-content">
+            
+            <!-- STATUS UPDATE BOX 
+                 CUSTOMIZATION: Update .status-text with your current feeling
+                 Update .status-date with today's date -->
+            <div class="status-box">
+                <h3>Right now, I'm...</h3>
+                <p class="status-text">
+                    working on something that sounds like 3am rain on windows. It's not done yet, but it's getting there.
+                </p>
+                <p class="status-date">— Updated Nov 15, 2024</p>
+            </div>
+
+            <!-- ROTATING LYRICS BOX 
+                 CUSTOMIZATION:
+                 - Add your own lyrics in .lyrics-text
+                 - Update song name in .lyrics-source
+                 - To rotate: just change the text periodically -->
+            <div class="lyrics-box">
+                <h3>Lines I've been carrying</h3>
+                <p class="lyrics-text">
+                    "between the silence and the sound<br>
+                    that's where I found what I've been looking for"
+                </p>
+                <p class="lyrics-source">— from "Ye Raat Hai Jo"</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ============================================
+         WORK DESK - YouTube & Instagram
+         CUSTOMIZATION:
+         - Replace YouTube channel URL
+         - Replace Instagram username
+         - Change caption texts
+         ============================================ -->
     <section class="work-desk">
         <div class="section-content">
             <div class="note">
-                <p class="handwritten">Most of this happens between 11pm-3am</p>
-                <p class="handwritten">when the world finally shuts up enough</p>
-                <p class="handwritten">to hear what I'm trying to say</p>
+                <p class="handwritten">This is where everything lives—</p>
+                <p class="handwritten">the finished pieces, the process, the in-between moments.</p>
             </div>
 
+            <!-- YOUTUBE SECTION -->
             <div class="link-box">
-                <a href="https://youtube.com/@yourchannel" target="_blank">📼 More sounds here →</a>
-                <p>Everything I've made so far. Stay as long as you want.</p>
+                <a href="https://youtube.com/@yourchannel" target="_blank">📼 The sounds →</a>
+                <p>Everything I've made. Some finished, some still finding their shape. Sit with whatever calls to you.</p>
             </div>
 
-            <div class="link-box">
-                <a href="https://instagram.com/yourhandle" target="_blank">🪟 The messy process →</a>
-                <p>Rough cuts, voice memos, 3am thoughts, things that never become songs</p>
+            <!-- INSTAGRAM EMBED 
+                 CUSTOMIZATION: Replace "yourhandle" with your actual Instagram username -->
+            <div class="instagram-embed">
+                <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/yourhandle/" data-instgrm-version="14" style="background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:540px; min-width:326px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);">
+                    <div style="padding:16px;">
+                        <a href="https://www.instagram.com/yourhandle/" style="background:#FFFFFF; line-height:0; padding:0 0; text-align:center; text-decoration:none; width:100%;" target="_blank">
+                            <div style="display: flex; flex-direction: row; align-items: center;">
+                                <div style="background-color: #F4F4F4; border-radius: 50%; flex-grow: 0; height: 40px; margin-right: 14px; width: 40px;"></div>
+                                <div style="display: flex; flex-direction: column; flex-grow: 1; justify-content: center;">
+                                    <div style="background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; margin-bottom: 6px; width: 100px;"></div>
+                                    <div style="background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; width: 60px;"></div>
+                                </div>
+                            </div>
+                            <div style="padding: 19% 0;"></div>
+                            <div style="display:block; height:50px; margin:0 auto 12px; width:50px;">
+                                <svg width="50px" height="50px" viewBox="0 0 60 60" version="1.1" xmlns="https://www.w3.org/2000/svg">
+                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                        <g transform="translate(-511.000000, -20.000000)" fill="#000000">
+                                            <g><path d="M556.869,30.41 C554.814,30.41 553.148,32.076 553.148,34.131 C553.148,36.186 554.814,37.852 556.869,37.852 C558.924,37.852 560.59,36.186 560.59,34.131 C560.59,32.076 558.924,30.41 556.869,30.41 M541,60.657 C535.114,60.657 530.342,55.887 530.342,50 C530.342,44.114 535.114,39.342 541,39.342 C546.887,39.342 551.658,44.114 551.658,50 C551.658,55.887 546.887,60.657 541,60.657 M541,33.886 C532.1,33.886 524.886,41.1 524.886,50 C524.886,58.899 532.1,66.113 541,66.113 C549.9,66.113 557.115,58.899 557.115,50 C557.115,41.1 549.9,33.886 541,33.886 M565.378,62.101 C565.244,65.022 564.756,66.606 564.346,67.663 C563.803,69.06 563.154,70.057 562.106,71.106 C561.058,72.155 560.06,72.803 558.662,73.347 C557.607,73.757 556.021,74.244 553.102,74.378 C549.944,74.521 548.997,74.552 541,74.552 C533.003,74.552 532.056,74.521 528.898,74.378 C525.979,74.244 524.393,73.757 523.338,73.347 C521.94,72.803 520.942,72.155 519.894,71.106 C518.846,70.057 518.197,69.06 517.654,67.663 C517.244,66.606 516.755,65.022 516.623,62.101 C516.479,58.943 516.448,57.996 516.448,50 C516.448,42.003 516.479,41.056 516.623,37.899 C516.755,34.978 517.244,33.391 517.654,32.338 C518.197,30.938 518.846,29.942 519.894,28.894 C520.942,27.846 521.94,27.196 523.338,26.654 C524.393,26.244 525.979,25.756 528.898,25.623 C532.057,25.479 533.004,25.448 541,25.448 C548.997,25.448 549.943,25.479 553.102,25.623 C556.021,25.756 557.607,26.244 558.662,26.654 C560.06,27.196 561.058,27.846 562.106,28.894 C563.154,29.942 563.803,30.938 564.346,32.338 C564.756,33.391 565.244,34.978 565.378,37.899 C565.522,41.056 565.552,42.003 565.552,50 C565.552,57.996 565.522,58.943 565.378,62.101 M570.82,37.631 C570.674,34.438 570.167,32.258 569.425,30.349 C568.659,28.377 567.633,26.702 565.965,25.035 C564.297,23.368 562.623,22.342 560.652,21.575 C558.743,20.834 556.562,20.326 553.369,20.18 C550.169,20.033 549.148,20 541,20 C532.853,20 531.831,20.033 528.631,20.18 C525.438,20.326 523.257,20.834 521.349,21.575 C519.376,22.342 517.703,23.368 516.035,25.035 C514.368,26.702 513.342,28.377 512.574,30.349 C511.834,32.258 511.326,34.438 511.181,37.631 C511.035,40.831 511,41.851 511,50 C511,58.147 511.035,59.17 511.181,62.369 C511.326,65.562 511.834,67.743 512.574,69.651 C513.342,71.625 514.368,73.296 516.035,74.965 C517.703,76.634 519.376,77.658 521.349,78.425 C523.257,79.167 525.438,79.673 528.631,79.82 C531.831,79.965 532.853,80.001 541,80.001 C549.148,80.001 550.169,79.965 553.369,79.82 C556.562,79.673 558.743,79.167 560.652,78.425 C562.623,77.658 564.297,76.634 565.965,74.965 C567.633,73.296 568.659,71.625 569.425,69.651 C570.167,67.743 570.674,65.562 570.82,62.369 C570.966,59.17 571,58.147 571,50 C571,41.851 570.966,40.831 570.82,37.631"></path></g>
+                                        </g>
+                                    </g>
+                                </svg>
+                            </div>
+                            <div style="padding-top: 8px;">
+                                <div style="color:#3897f0; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:550; line-height:18px;">View this profile on Instagram</div>
+                            </div>
+                        </a>
+                    </div>
+                </blockquote>
+                <script async src="//www.instagram.com/embed.js"></script>
             </div>
 
-            <div class="note" style="opacity: 0.6;">
-                <p class="handwritten" style="font-size: 0.9rem;">(Spotify/Bandcamp coming when it feels right)</p>
+            <div class="note" style="opacity: 0.7;">
+                <p class="handwritten" style="font-size: 0.95rem;">
+                    (Spotify/Bandcamp coming when it feels right)
+                </p>
             </div>
         </div>
     </section>
 
-    <!-- Conversation Corner -->
+    <!-- ============================================
+         CONVERSATION CORNER
+         CUSTOMIZATION:
+         - Update Formspree form action URL
+         - Change intro text to match your voice
+         ============================================ -->
     <section class="conversation-corner">
         <div class="section-content">
             <div class="note">
-                <p class="handwritten">Friends tell each other things, you know?</p>
-                <p class="handwritten" style="margin-top: 1rem;">What's sitting heavy on you today?</p>
-                <p class="handwritten">What are you carrying that you need to set down for a minute?</p>
-                <p class="handwritten">Or maybe something good happened—tell me that too.</p>
+                <p class="handwritten">You know how you listen to a track and suddenly feel less alone?</p>
+                <p class="handwritten" style="margin-top: 1rem;">That goes both ways.</p>
+                <p class="handwritten">Whatever's on your mind—share it here. I'm listening the same way you listen to these sounds.</p>
             </div>
 
+            <!-- FORM ACTION: Replace YOUR_FORM_ID with your Formspree form ID -->
             <form class="journal-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
                 <input 
                     type="text" 
@@ -497,24 +832,29 @@
                 <p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.7;">
                     I read everything. Sometimes I respond.<br>
                     Sometimes I just sit with it.<br>
-                    Sometimes I make something.
+                    Sometimes something new comes out of it.
                 </p>
             </form>
         </div>
     </section>
 
-    <!-- Inner Room -->
+    <!-- ============================================
+         INNER ROOM - Email Signup
+         CUSTOMIZATION:
+         - Update Formspree form action URL
+         - Change intro text
+         ============================================ -->
     <section class="inner-room">
         <div class="section-content">
             <div class="note">
-                <p class="handwritten">Some things I only share with people who come back.</p>
-                <p class="handwritten" style="margin-top: 1rem;">Unfinished pieces.</p>
-                <p class="handwritten">Voice memos where I'm talking through an idea.</p>
-                <p class="handwritten">The thing I made at 4am that might never be 'done.'</p>
-                <p class="handwritten">Thoughts that don't fit anywhere else.</p>
+                <p class="handwritten">Some things I only share with people who want to stay close.</p>
+                <p class="handwritten" style="margin-top: 1rem;">Unfinished pieces that might never be "done."</p>
+                <p class="handwritten">Voice memos where I'm thinking out loud.</p>
+                <p class="handwritten">The 4am experiments.</p>
                 <p class="handwritten" style="margin-top: 1rem;">Just between us.</p>
             </div>
 
+            <!-- FORM ACTION: Replace YOUR_FORM_ID with your Formspree form ID -->
             <div class="email-box">
                 <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
                     <p class="handwritten">If you want in—</p>
@@ -539,15 +879,20 @@
         </div>
     </section>
 
-    <!-- Exit -->
+    <!-- ============================================
+         EXIT SECTION
+         CUSTOMIZATION:
+         - Change goodbye text
+         - Update location if needed
+         ============================================ -->
     <section class="exit">
         <div class="section-content">
             <div class="exit-text">
-                <p class="handwritten" style="font-size: 1.2rem;">That's everything.</p>
-                <p class="handwritten" style="margin-top: 1rem;">You can leave anytime,</p>
+                <p class="handwritten" style="font-size: 1.3rem;">That's everything.</p>
+                <p class="handwritten" style="margin-top: 1.5rem;">You can leave anytime,</p>
                 <p class="handwritten">or scroll back up and stay a while.</p>
-                <p class="handwritten" style="margin-top: 2rem;">Thanks for being here.</p>
-                <p style="margin-top: 3rem; font-size: 0.8rem; opacity: 0.5;">
+                <p class="handwritten" style="margin-top: 2rem; font-size: 1.1rem;">Thanks for being here.</p>
+                <p style="margin-top: 3rem; font-size: 0.85rem; opacity: 0.6;">
                     Made by hand<br>
                     Updated whenever it feels right<br>
                     सखा
@@ -556,12 +901,15 @@
         </div>
     </section>
 
+    <!-- ============================================
+         JAVASCRIPT
+         - Handles fade-in animations
+         - Smooth scrolling
+         - Parallax effects
+         ============================================ -->
     <script>
-        // Fade in "Still here?" after video plays for 30 seconds
-        let videoPlayed = false;
+        // Fade in "Still here?" after 30 seconds
         const stillHereElement = document.getElementById('still-here');
-
-        // Simple timeout version (YouTube API would be more accurate but requires API key)
         setTimeout(() => {
             stillHereElement.classList.add('visible');
         }, 30000);
@@ -573,16 +921,26 @@
             });
         });
 
-        // Add subtle parallax effect
+        // Subtle parallax effect on scroll
         window.addEventListener('scroll', () => {
             const scrolled = window.pageYOffset;
-            const parallaxElements = document.querySelectorAll('.note, .polaroid, .link-box');
+            const parallaxElements = document.querySelectorAll('.note, .polaroid, .link-box, .status-box, .lyrics-box');
             
             parallaxElements.forEach((el, index) => {
-                const speed = 0.5 + (index * 0.1);
+                const speed = 0.3 + (index * 0.05);
                 const yPos = -(scrolled * speed / 100);
-                el.style.transform = `translateY(${yPos}px) rotate(${index % 2 ? 1 : -1}deg)`;
+                const rotation = index % 2 ? 1 : -1;
+                el.style.transform = `translateY(${yPos}px) rotate(${rotation}deg)`;
             });
+        });
+
+        // Add entrance animation on page load
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '0';
+            setTimeout(() => {
+                document.body.style.transition = 'opacity 1s ease-in';
+                document.body.style.opacity = '1';
+            }, 100);
         });
     </script>
     
