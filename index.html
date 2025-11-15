@@ -13,9 +13,47 @@
 
         body {
             font-family: 'Courier New', monospace;
-            background: linear-gradient(to bottom, #f5e6d3 0%, #e8d4bb 100%);
             color: #3a2f26;
             overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Background Image Container */
+        .background-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .background-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center top;
+        }
+
+        /* Show desktop image by default, hide mobile */
+        .background-image.mobile {
+            display: none;
+        }
+
+        /* On mobile screens, show mobile image and hide desktop */
+        @media (max-width: 768px) {
+            .background-image.desktop {
+                display: none;
+            }
+            .background-image.mobile {
+                display: block;
+            }
+        }
+
+        /* Content wrapper to ensure text is above background */
+        .content-wrapper {
+            position: relative;
+            z-index: 1;
         }
 
         /* Handwritten font styling */
@@ -32,9 +70,9 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            background: url(entrance.jpg) center/cover no-repeat;
             position: relative;
             overflow: hidden;
+            background: transparent;
         }
 
         .entrance::before {
@@ -89,6 +127,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            background: transparent;
         }
 
         .section-content {
@@ -111,11 +150,11 @@
 
         /* Listening Room */
         .listening-room {
-            background: url(2nd.jpg) center/cover no-repeat;;
+            background: transparent;
         }
 
         .polaroid {
-            background: url(3rd.jpg) center/cover no-repeat;;
+            background: #fff;
             padding: 1rem;
             box-shadow: 3px 5px 15px rgba(0,0,0,0.2);
             transform: rotate(-2deg);
@@ -164,7 +203,7 @@
 
         /* Work Desk Section */
         .work-desk {
-            background: url(4th.jpg) center/cover no-repeat;;
+            background: transparent;
         }
 
         .link-box {
@@ -215,7 +254,7 @@
 
         /* Conversation Corner */
         .conversation-corner {
-            background: url(5th.jpg) center/cover no-repeat;;
+            background: transparent;
         }
 
         .journal-form {
@@ -280,7 +319,7 @@
 
         /* Inner Room */
         .inner-room {
-            background: url(6th.jpg) center/cover no-repeat;;
+            background: transparent;
         }
 
         .email-box {
@@ -317,7 +356,7 @@
 
         /* Exit Section */
         .exit {
-            background: linear-gradient(to bottom, #b8a088 0%, #9a8776 100%);
+            background: transparent;
             min-height: 50vh;
         }
 
@@ -359,11 +398,22 @@
     </style>
 </head>
 <body>
+    <!-- Background Image Container -->
+    <div class="background-wrapper">
+        <!-- Desktop background image -->
+        <img src="background-desktop.jpg" alt="" class="background-image desktop">
+        <!-- Mobile background image -->
+        <img src="background-mobile.jpg" alt="" class="background-image mobile">
+    </div>
+
+    <!-- All content wrapped -->
+    <div class="content-wrapper">
+    
     <!-- Entrance -->
     <div class="entrance">
         <div class="entrance-text">
             <h1 class="handwritten">You found your way here.</h1>
-            <p>सखा</p>
+            <p>सखा - friend, companion</p>
             <div class="arrow-down" onclick="document.querySelector('.listening-room').scrollIntoView({behavior: 'smooth'})">
                 ↓<br>Come in
             </div>
@@ -381,7 +431,7 @@
             <div class="polaroid">
                 <!-- Replace YOUR_VIDEO_ID with your actual YouTube video ID -->
                 <iframe 
-                    src="https://www.youtube.com/embed/xUkG1nxkoQo?enablejsapi=1" 
+                    src="https://www.youtube.com/embed/YOUR_VIDEO_ID?enablejsapi=1" 
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                     allowfullscreen
                     id="youtube-player">
@@ -406,12 +456,12 @@
             </div>
 
             <div class="link-box">
-                <a href="https://youtube.com/@sackhha" target="_blank">📼 More sounds here →</a>
+                <a href="https://youtube.com/@yourchannel" target="_blank">📼 More sounds here →</a>
                 <p>Everything I've made so far. Stay as long as you want.</p>
             </div>
 
             <div class="link-box">
-                <a href="https://instagram.com/sackhha" target="_blank">🪟 The messy process →</a>
+                <a href="https://instagram.com/yourhandle" target="_blank">🪟 The messy process →</a>
                 <p>Rough cuts, voice memos, 3am thoughts, things that never become songs</p>
             </div>
 
@@ -431,7 +481,7 @@
                 <p class="handwritten">Or maybe something good happened—tell me that too.</p>
             </div>
 
-            <form class="journal-form" action="https://formspree.io/f/xnnlparj" method="POST">
+            <form class="journal-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
                 <input 
                     type="text" 
                     name="name" 
@@ -466,12 +516,12 @@
             </div>
 
             <div class="email-box">
-                <form action="https://formspree.io/f/xnnlparj" method="POST">
+                <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
                     <p class="handwritten">If you want in—</p>
                     <input 
                         type="email" 
                         name="email" 
-                        placeholder="sackhha@gmail.com"
+                        placeholder="your@email.com"
                         required
                     >
                     <label class="checkbox-container">
@@ -535,5 +585,7 @@
             });
         });
     </script>
+    
+    </div> <!-- Close content-wrapper -->
 </body>
 </html>
