@@ -752,13 +752,10 @@
 
             <!-- ROTATING LYRICS - Edit text below -->
             <div class="lyrics-box">
-                <h3>Lines I've been carrying</h3>
-                <p class="lyrics-text">
-                    "between the silence and the sound<br>
-                    that's where I found what I've been looking for"
-                </p>
-                <p class="lyrics-source">— from "Ye Raat Hai Jo"</p>
-            </div>
+    <h3>Lines I've been carrying</h3>
+    <p class="lyrics-text" id="rotating-lyrics"></p>
+    <p class="lyrics-source" id="lyrics-source"></p>
+</div>
 
         </div>
     </section>
@@ -944,6 +941,53 @@
                 behavior: 'smooth' // Makes scrolling smooth instead of instant jump
             });
         });
+        // LYRICS ROTATION SYSTEM
+const lyrics = [
+    {text: "between the silence and the sound<br>that's where I found what I've been looking for", song: "Ye Raat Hai Jo"},
+    {text: "Your lyric line 2 here", song: "Song Name 2"},
+    {text: "Your lyric line 3 here", song: "Song Name 3"},
+    {text: "Your lyric line 4 here", song: "Song Name 4"},
+    {text: "Your lyric line 5 here", song: "Song Name 5"},
+    {text: "Your lyric line 6 here", song: "Song Name 6"},
+    {text: "Your lyric line 7 here", song: "Song Name 7"},
+    {text: "Your lyric line 8 here", song: "Song Name 8"},
+    {text: "Your lyric line 9 here", song: "Song Name 9"},
+    {text: "Your lyric line 10 here", song: "Song Name 10"},
+    {text: "Your lyric line 11 here", song: "Song Name 11"},
+    {text: "Your lyric line 12 here", song: "Song Name 12"}
+];
+
+let currentIndex = 0;
+const lyricsElement = document.getElementById('rotating-lyrics');
+const sourceElement = document.getElementById('lyrics-source');
+
+function changeLyric() {
+    // Telegram vanish effect
+    lyricsElement.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+    sourceElement.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+    lyricsElement.style.opacity = '0';
+    lyricsElement.style.transform = 'scale(0.8)';
+    sourceElement.style.opacity = '0';
+    sourceElement.style.transform = 'scale(0.8)';
+    
+    setTimeout(() => {
+        currentIndex = (currentIndex + 1) % lyrics.length;
+        lyricsElement.innerHTML = lyrics[currentIndex].text;
+        sourceElement.textContent = '— from "' + lyrics[currentIndex].song + '"';
+        
+        lyricsElement.style.opacity = '1';
+        lyricsElement.style.transform = 'scale(1)';
+        sourceElement.style.opacity = '1';
+        sourceElement.style.transform = 'scale(1)';
+    }, 400);
+}
+
+// Show first lyric on load
+lyricsElement.innerHTML = lyrics[0].text;
+sourceElement.textContent = '— from "' + lyrics[0].song + '"';
+
+// Change every 6 seconds
+setInterval(changeLyric, 6000);
     </script>
     
     </div> <!-- Closes content-wrapper -->
