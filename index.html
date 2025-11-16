@@ -975,8 +975,8 @@ const sourceElement = document.getElementById('lyrics-source');
 
 function changeLyric() {
     // Dissolve-like effect
-    lyricsElement.style.transition = 'opacity 0.5s ease, filter 0.5s ease, transform 0.5s ease';
-    sourceElement.style.transition = 'opacity 0.5s ease, filter 0.5s ease, transform 0.5s ease';
+    lyricsElement.style.transition = 'opacity 0.9s ease, filter 0.9s ease, transform 0.9s ease';
+    sourceElement.style.transition = 'opacity 0.9s ease, filter 0.9s ease, transform 0.9s ease';
     
     lyricsElement.style.opacity = '0';
     lyricsElement.style.filter = 'blur(8px)';
@@ -1004,7 +1004,7 @@ function changeLyric() {
         sourceElement.style.filter = 'blur(0px)';
         sourceElement.style.opacity = '1';
         sourceElement.style.transform = 'scale(1) translateY(0)';
-    }, 500);
+    }, 900);
 }
 
 // Show first lyric
