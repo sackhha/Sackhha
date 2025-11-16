@@ -941,53 +941,78 @@
                 behavior: 'smooth' // Makes scrolling smooth instead of instant jump
             });
         });
-        // LYRICS ROTATION SYSTEM
+       // LYRICS ROTATION WITH DISSOLVE EFFECT AND RANDOM ORDER
 const lyrics = [
     {text: "between the silence and the sound<br>that's where I found what I've been looking for", song: "Ye Raat Hai Jo"},
-    {text: "Your lyric line 2 here", song: "Song Name 2"},
-    {text: "Your lyric line 3 here", song: "Song Name 3"},
-    {text: "Your lyric line 4 here", song: "Song Name 4"},
-    {text: "Your lyric line 5 here", song: "Song Name 5"},
-    {text: "Your lyric line 6 here", song: "Song Name 6"},
-    {text: "Your lyric line 7 here", song: "Song Name 7"},
-    {text: "Your lyric line 8 here", song: "Song Name 8"},
-    {text: "Your lyric line 9 here", song: "Song Name 9"},
-    {text: "Your lyric line 10 here", song: "Song Name 10"},
-    {text: "Your lyric line 11 here", song: "Song Name 11"},
-    {text: "Your lyric line 12 here", song: "Song Name 12"}
+    {text: "Add your lyric line 2", song: "Song Name 2"},
+    {text: "Add your lyric line 3", song: "Song Name 3"},
+    {text: "Add your lyric line 4", song: "Song Name 4"},
+    {text: "Add your lyric line 5", song: "Song Name 5"},
+    {text: "Add your lyric line 6", song: "Song Name 6"},
+    {text: "Add your lyric line 7", song: "Song Name 7"},
+    {text: "Add your lyric line 8", song: "Song Name 8"},
+    {text: "Add your lyric line 9", song: "Song Name 9"},
+    {text: "Add your lyric line 10", song: "Song Name 10"},
+    {text: "Add your lyric line 11", song: "Song Name 11"},
+    {text: "Add your lyric line 12", song: "Song Name 12"}
 ];
+
+// Shuffle function
+function shuffleLyrics(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
+// Shuffle lyrics on page load
+shuffleLyrics(lyrics);
 
 let currentIndex = 0;
 const lyricsElement = document.getElementById('rotating-lyrics');
 const sourceElement = document.getElementById('lyrics-source');
 
 function changeLyric() {
-    // Telegram vanish effect
-    lyricsElement.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
-    sourceElement.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+    // Dissolve-like effect
+    lyricsElement.style.transition = 'opacity 0.5s ease, filter 0.5s ease, transform 0.5s ease';
+    sourceElement.style.transition = 'opacity 0.5s ease, filter 0.5s ease, transform 0.5s ease';
+    
     lyricsElement.style.opacity = '0';
-    lyricsElement.style.transform = 'scale(0.8)';
+    lyricsElement.style.filter = 'blur(8px)';
+    lyricsElement.style.transform = 'scale(0.9) translateY(-10px)';
+    
     sourceElement.style.opacity = '0';
-    sourceElement.style.transform = 'scale(0.8)';
+    sourceElement.style.filter = 'blur(8px)';
+    sourceElement.style.transform = 'scale(0.9) translateY(-10px)';
     
     setTimeout(() => {
         currentIndex = (currentIndex + 1) % lyrics.length;
+        
+        // Re-shuffle after completing full cycle
+        if (currentIndex === 0) {
+            shuffleLyrics(lyrics);
+        }
+        
         lyricsElement.innerHTML = lyrics[currentIndex].text;
         sourceElement.textContent = '— from "' + lyrics[currentIndex].song + '"';
         
+        lyricsElement.style.filter = 'blur(0px)';
         lyricsElement.style.opacity = '1';
-        lyricsElement.style.transform = 'scale(1)';
+        lyricsElement.style.transform = 'scale(1) translateY(0)';
+        
+        sourceElement.style.filter = 'blur(0px)';
         sourceElement.style.opacity = '1';
-        sourceElement.style.transform = 'scale(1)';
-    }, 400);
+        sourceElement.style.transform = 'scale(1) translateY(0)';
+    }, 500);
 }
 
-// Show first lyric on load
+// Show first lyric
 lyricsElement.innerHTML = lyrics[0].text;
 sourceElement.textContent = '— from "' + lyrics[0].song + '"';
 
-// Change every 6 seconds
-setInterval(changeLyric, 6000);
+// Change every 9 seconds
+setInterval(changeLyric, 9000);
     </script>
     
     </div> <!-- Closes content-wrapper -->
